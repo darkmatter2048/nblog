@@ -7,42 +7,51 @@ import remarkCustomHeaderId from 'remark-custom-header-id';
 /// import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import {SITE} from './source/config.mjs';
 
+import vercel from '@astrojs/vercel/serverless';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
-	site: SITE.origin,
-	srcDir: './source',
-	output: 'static',
-	trailingSlash: 'never',
-	build: {
-		format: 'file',
+  site: SITE.origin,
+  srcDir: './source',
+  output: 'static',
+  trailingSlash: 'never',
+
+  build: {
+      format: 'file',
 	},
-	redirects: {
-		'/thanks': '/supporters',
-		'/lock-screen-one': '/any-text',
+
+  redirects: {
+      '/thanks': '/supporters',
+      '/lock-screen-one': '/any-text',
 	},
-	integrations: [
-		tailwind({
-			applyBaseStyles: false,
-		}),
-		sitemap(),
+
+  integrations: [
+      tailwind({
+          applyBaseStyles: false,
+      }),
+      sitemap(),
 	],
-	markdown: {
-		remarkPlugins: [
-			remarkCustomHeaderId,
-		],
-		// TODO
-		// rehypePlugins: [
-		// 	rehypeHeadingIds,
-		// 	[rehypeAutolinkHeadings, {behavior: 'wrap'}],
-		// ]
+
+  markdown: {
+      remarkPlugins: [
+          remarkCustomHeaderId,
+      ],
+      // TODO
+      // rehypePlugins: [
+      // 	rehypeHeadingIds,
+      // 	[rehypeAutolinkHeadings, {behavior: 'wrap'}],
+      // ]
 	},
-	vite: {
-		resolve: {
-			alias: {
-				'~': path.resolve(__dirname, './source'),
-			},
-		},
+
+  vite: {
+      resolve: {
+          alias: {
+              '~': path.resolve(__dirname, './source'),
+          },
+      },
 	},
+
+  adapter: vercel(),
 });
