@@ -1,5 +1,5 @@
 {
   "routes": [
-    { "src": "/(.*)", "dest": "/source/pages/index.astro" }
+    { "src": "/(.*)", "dest": "/source/pages/" }
   ]
 }
